@@ -20,48 +20,55 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddCubit(),
-      child: BlocBuilder<AddCubit, AddState>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Add new upcoming title'),
-              actions: [
-                IconButton(
-                  onPressed: _imageURL == null ||
-                          _title == null ||
-                          _releaseDate == null
-                      ? null
-                      : () {
-                          context.read<AddCubit>().add(
-                                _title!,
-                                _imageURL!,
-                                _releaseDate!,
-                              );
-                        },
-                  icon: const Icon(Icons.check),
-                ),
-              ],
-            ),
-            body: _AddPageBody(
-              onTitleChanged: (newValue) {
-                setState(() {
-                  _title = newValue;
-                });
-              },
-              onImageUrlChanged: (newValue) {
-                setState(() {
-                  _imageURL = newValue;
-                });
-              },
-              onDateChanged: (newValue) {
-                setState(() {
-                  _releaseDate = newValue;
-                });
-              },
-              selectedDateFormatted: _releaseDate?.toIso8601String(),
-            ),
-          );
+      child: BlocListener<AddCubit, AddState>(
+        listener: (context, state) {
+          if (state.saved) {
+            Navigator.of(context).pop();
+          }
         },
+        child: BlocBuilder<AddCubit, AddState>(
+          builder: (context, state) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Add new upcoming title'),
+                actions: [
+                  IconButton(
+                    onPressed: _imageURL == null ||
+                            _title == null ||
+                            _releaseDate == null
+                        ? null
+                        : () {
+                            context.read<AddCubit>().add(
+                                  _title!,
+                                  _imageURL!,
+                                  _releaseDate!,
+                                );
+                          },
+                    icon: const Icon(Icons.check),
+                  ),
+                ],
+              ),
+              body: _AddPageBody(
+                onTitleChanged: (newValue) {
+                  setState(() {
+                    _title = newValue;
+                  });
+                },
+                onImageUrlChanged: (newValue) {
+                  setState(() {
+                    _imageURL = newValue;
+                  });
+                },
+                onDateChanged: (newValue) {
+                  setState(() {
+                    _releaseDate = newValue;
+                  });
+                },
+                selectedDateFormatted: _releaseDate?.toIso8601String(),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
