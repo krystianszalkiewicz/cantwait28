@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cantwait28">
+    package="com.krystianszalkiewicz.cantwait28">
    <application
         android:label="cantwait28"
         android:icon="@mipmap/ic_launcher">
