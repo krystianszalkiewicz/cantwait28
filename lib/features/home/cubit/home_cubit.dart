@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../models/item_model.dart';
+
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -14,9 +16,18 @@ class HomeCubit extends Cubit<HomeState> {
     _streamSubscription = FirebaseFirestore.instance
         .collection('items')
         .orderBy('release_date')
-        .snapshots().listen(
+        .snapshots()
+        .listen(
       (items) {
-        emit(HomeState(items: items));
+        final itemModels = items.docs.map((doc) {
+          return ItemModel(
+            id: doc.id,
+            title: doc['title'],
+            imageURL: doc['image_url'],
+            releaseDate: (doc['release_date']as Timestamp).toDate(),
+          );
+        }).toList();
+        emit(HomeState(items: itemModels));
       },
     )..onError(
         (error) {
