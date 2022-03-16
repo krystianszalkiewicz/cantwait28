@@ -145,7 +145,7 @@ class _ListViewItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            itemModel.releaseDate.toString(),
+                            itemModel.relaseDateFormetted(),
                           ),
                         ],
                       ),
