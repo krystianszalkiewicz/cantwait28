@@ -1,6 +1,5 @@
 import 'package:cantwait28/models/item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
 
 class ItemRepository {
   Stream<List<ItemModel>> getItemsStream() {
@@ -26,6 +25,17 @@ class ItemRepository {
 
   Future<void> delete({required String id}) {
     return FirebaseFirestore.instance.collection('items').doc(id).delete();
+  }
+
+  Future<ItemModel> get({required String id}) async {
+    final doc =
+        await FirebaseFirestore.instance.collection('items').doc(id).get();
+    return ItemModel(
+      id: doc.id,
+      title: doc['title'],
+      imageURL: doc['image_url'],
+      releaseDate: (doc['release_date'] as Timestamp).toDate(),
+    );
   }
 
   Future<void> add(
