@@ -15,6 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
+  flutterfire_ui: ^0.3.1
   intl: ^0.17.0
 
 dev_dependencies:
