@@ -1,4 +1,4 @@
-import 'package:cantwait28/features/auth/pages/auth_pages.dart';
+import 'package:cantwait28/features/auth/pages/auth_gate.dart';
 import 'package:cantwait28/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
